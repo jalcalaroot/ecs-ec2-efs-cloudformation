@@ -451,9 +451,9 @@ Resources:
             sudo systemctl restart awslogsd
             aws configure set preview.efs true
             export EFSID=`aws efs describe-file-systems --region $REGION | jq '.FileSystems[]' | jq 'select(.Name=="'${ProyectID}.FileSystem'")' | jq -r '.FileSystemId'`
-            mkdir -p /opt/app/provisioner/shared
-            echo "$EFSID:/ /opt/app/provisioner/shared efs defaults,_netdev 0 0" >> /etc/fstab
-            mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport $EFSID.efs.$REGION.amazonaws.com:/ /opt/app/provisioner/shared
+            mkdir -p /opt/app/shared
+            echo "$EFSID:/ /opt/app/shared efs defaults,_netdev 0 0" >> /etc/fstab
+            mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport $EFSID.efs.$REGION.amazonaws.com:/ /opt/app/shared
             echo "EFS mounted successfully" >> /home/ec2-user/config.txt
 
 Outputs:
